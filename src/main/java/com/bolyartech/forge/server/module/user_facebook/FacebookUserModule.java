@@ -3,8 +3,11 @@ package com.bolyartech.forge.server.module.user_facebook;
 import com.bolyartech.forge.server.db.DbPool;
 import com.bolyartech.forge.server.module.HttpModule;
 import com.bolyartech.forge.server.module.user.data.screen_name.ScreenNameDbh;
+import com.bolyartech.forge.server.module.user.data.screen_name.ScreenNameDbhImpl;
 import com.bolyartech.forge.server.module.user.data.user.UserDbh;
+import com.bolyartech.forge.server.module.user.data.user.UserDbhImpl;
 import com.bolyartech.forge.server.module.user.data.user_ext_id.UserExtIdDbh;
+import com.bolyartech.forge.server.module.user.data.user_ext_id.UserExtIdDbhImpl;
 import com.bolyartech.forge.server.route.PostRoute;
 import com.bolyartech.forge.server.route.Route;
 
@@ -26,6 +29,13 @@ public class FacebookUserModule implements HttpModule {
     private final UserExtIdDbh mUserExtIdDbh;
     private final FacebookWrapper mFacebookWrapper;
 
+    public static FacebookUserModule createDefault(DbPool dbPool) {
+        return new FacebookUserModule(dbPool,
+                new UserDbhImpl(),
+                new ScreenNameDbhImpl(),
+                new UserExtIdDbhImpl(),
+                new FacebookWrapperImpl());
+    }
 
     public FacebookUserModule(String pathPrefix, DbPool dbPool, UserDbh userDbh,
                               ScreenNameDbh screenNameDbh, UserExtIdDbh userExtIdDbh, FacebookWrapper facebookWrapper) {
